@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Emotion Based Music System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Emotion Based Music System</h1>
+
+        <video id="video" width="320" height="240" autoplay></video><br>
+        <button id="capture-btn">Capture & Detect Emotion</button>
+
+        <form id="image-form" method="POST" style="display:none;">
+            <input type="hidden" name="image" id="image-input">
+        </form>
+
+        {% if emotion %}
+            <h2>Detected Emotion: {{ emotion.upper() }}</h2>
+            <h3>Recommended Songs:</h3>
+            <ul>
+                {% for song in playlist %}
+                    <li class="song-item">
+                        <div class="song-title">{{ song.split('/')[-1].replace('_', ' ').replace('.mp3', '').title() }}</div>
+                        <a href="{{ url_for('static', filename=song) }}" target="_blank" class="play-button">Play 🎵🎶</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const captureBtn = document.getElementById('capture-btn');
+        const imageForm = document.getElementById('image-form');
+        const imageInput = document.getElementById('image-input');
+
+        // Access webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                alert("Could not access webcam.");
+            });
+
+        captureBtn.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/jpeg');
+            imageInput.value = imageData;
+            
+            imageForm.submit();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1DB954, #1ed760, #1fdf64);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+@keyframes gradientAnimation {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+h2, h3 {
+    margin-top: 20px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+ul {
+    padding: 0;
+}
+
+.song-item {
+    list-style-type: none;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.song-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.song-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.play-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1DB954;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    font-size: 1.1em;
+}
+
+.play-button:hover {
+    background-color: #1ed760;
+}
+
+video {
+    border-radius: 10px;
+    border: 3px solid white;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #1ed760;
+}
