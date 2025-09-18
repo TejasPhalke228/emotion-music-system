@@ -1,6 +1,6 @@
 Flask
 opencv-python
-tensorflow
+tensorflow-cpu
 numpy
 pandas
 gunicorn
