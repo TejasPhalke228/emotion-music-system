@@ -16,27 +16,27 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # Emotion to Bollywood songs mapping
 emotion_playlist = {
     'happy': [
-        "music/pehla_nasha.mp3",
-        "music/tujhe_dekha.mp3",
-	"music/badtameez_dil.mp3",
-	"music/ilahi.mp3"
+        "https://drive.google.com/uc?export=download&id=13bfaZXgsGNPPkD_pA-Rkm8FXTNO3bQeD",
+        "https://drive.google.com/uc?export=download&id=1JdXgcvcfiqftvr5-CLcGGXvRx6WOKMjq",
+	"https://drive.google.com/uc?export=download&id=1R6BWqjS2x22C3bziEuhhBLfhvbSw8S5B",
+	"https://drive.google.com/uc?export=download&id=1EvDoLKpCbcwyK4ArKaHr4Z8U4M7S0X70"
     ],
     'sad': [
-        "music/channa_mereya.mp3",
-        "music/tum_hi_ho.mp3",
-	"music/dooriyan.mp3"
+        "https://drive.google.com/uc?export=download&id=1xQs78QDm6Keh-3c5R02gX6JJUxBxP0E6",
+        "https://drive.google.com/uc?export=download&id=1VGPTp2-xN1lRUF36P3yfR5z9BbvTnS4r",
+	"https://drive.google.com/uc?export=download&id=1uAjVLL8pSNb5FTc9sDQpMPxH-5VE1jDn"
     ],
     'angry': [
-        "music/saadda_haq.mp3",
-        "music/bulleya.mp3"
+        "https://drive.google.com/uc?export=download&id=1reSryO2rgIjWGdZ2PgZbno5nmmcywWpH",
+        "https://drive.google.com/uc?export=download&id=116l9rKuM1YHYtPnqFW-vk76Ms7E7dq-R"
     ],
     'surprise': [
-        "music/ek_ladki.mp3"
+        "https://drive.google.com/uc?export=download&id=1dIEjD7HH_FpndU9Px1oGQIiwNr_Re-4Q"
     ],
     'neutral': [
         "music/ae_mere_humsafar.mp3",
-	"music/kabira.mp3",
-	"music/tera hone.mp3"
+	"https://drive.google.com/uc?export=download&id=1OBw5YVlxMsAoNKNT9DEj0dkZyOb2lLw7",
+	"https://drive.google.com/uc?export=download&id=1C0z_LLbvoGR1qKM8a94fUZsHijR6NBTp"
     ]
 }
 
@@ -73,3 +73,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
