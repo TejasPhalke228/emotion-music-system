@@ -24,7 +24,8 @@
                 {% for song in playlist %}
                     <li class="song-item">
                         <div class="song-title">{{ song.split('/')[-1].replace('_', ' ').replace('.mp3', '').title() }}</div>
-                        <a href="{{ url_for('static', filename=song) }}" target="_blank" class="play-button">Play 🎵🎶</a>
+                        <a href="{{ song }}" target="_blank" class="play-button">Play 🎵🎶</a>
+
                     </li>
                 {% endfor %}
             </ul>
@@ -61,3 +62,4 @@
     </script>
 </body>
 </html>
+
