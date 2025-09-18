@@ -1,7 +1,6 @@
 Flask
+deepface
+pillow
 opencv-python
-tensorflow-cpu
-numpy
-pandas
 gunicorn
-python-3.9
+tensorflow-cpu
