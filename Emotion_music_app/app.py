@@ -16,7 +16,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # Emotion to Bollywood songs mapping
 emotion_playlist = {
     'happy': [
-        {"title": "pehla nasha", "url":"https://drive.google.com/uc?export=download&id=13bfaZXgsGNPPkD_pA-Rkm8FXTNO3bQeD",
+        {"title": "pehla nasha", "url":"https://drive.google.com/uc?export=download&id=13bfaZXgsGNPPkD_pA-Rkm8FXTNO3bQeD"},
         {"title": "tujhe dekha", "url":"https://drive.google.com/uc?export=download&id=1JdXgcvcfiqftvr5-CLcGGXvRx6WOKMjq"},
 		{"title": "badtameez dil", "url":"https://drive.google.com/uc?export=download&id=1R6BWqjS2x22C3bziEuhhBLfhvbSw8S5B"},
 		{"title": "ilahi", "url":"https://drive.google.com/uc?export=download&id=1EvDoLKpCbcwyK4ArKaHr4Z8U4M7S0X70"}
@@ -72,5 +72,6 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
