@@ -1,0 +1,6 @@
+Flask
+deepface
+pillow
+opencv-python
+gunicorn
+tensorflow-cpu
