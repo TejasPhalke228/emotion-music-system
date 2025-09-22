@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emotion Based Music System</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -17,41 +17,18 @@
             <input type="hidden" name="image" id="image-input">
         </form>
 
-      {% if emotion %}
-    <div id="emotion-card">
-        <div class="emotion-icon">
-            {% if emotion == 'happy' %}
-                😄
-            {% elif emotion == 'sad' %}
-                😢
-            {% elif emotion == 'angry' %}
-                😡
-            {% elif emotion == 'surprise' %}
-                😲
-            {% else %}
-                😐
-            {% endif %}
-        </div>
-        <div>
+        {% if emotion %}
             <h2>Detected Emotion: {{ emotion.upper() }}</h2>
-        </div>
-    </div>
-
-    <h3>Recommended Songs:</h3>
-    <ul>
-        {% for song in playlist %}
-            <li class="song-item">
-                <div class="song-title">{{ song.title }}</div>
-                <audio controls>
-                    <source src="{{ song.url }}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-
+            <h3>Recommended Songs:</h3>
+            <ul>
+                {% for song in playlist %}
+                    <li class="song-item">
+                        <div class="song-title">{{ song.title }}</div>
+                        <a href="{{ song.url }}" target="_blank" class="play-button">Listen 🎵</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 
     <script>
@@ -60,28 +37,19 @@
         const imageForm = document.getElementById('image-form');
         const imageInput = document.getElementById('image-input');
 
-        // Access webcam
         navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(err => {
-                alert("Could not access webcam.");
-            });
+            .then(stream => video.srcObject = stream)
+            .catch(err => alert("Could not access webcam."));
 
         captureBtn.addEventListener('click', () => {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            const imageData = canvas.toDataURL('image/jpeg');
-            imageInput.value = imageData;
-            
+            imageInput.value = canvas.toDataURL('image/jpeg');
             imageForm.submit();
         });
     </script>
 </body>
 </html>
-
