@@ -42,13 +42,15 @@
         {% for song in playlist %}
             <li class="song-item">
                 <div class="song-title">{{ song.title }}</div>
-                <a href="https://drive.google.com/file/d/FILE_ID/preview" target="_blank" class="play-button">
-                    Play 🎵
-                </a>
+                <audio controls>
+                    <source src="{{ song.url }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
             </li>
         {% endfor %}
     </ul>
 {% endif %}
+
 
     </div>
 
@@ -82,3 +84,4 @@
     </script>
 </body>
 </html>
+
