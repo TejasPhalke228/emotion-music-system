@@ -32,7 +32,7 @@ emotion_playlist = {
     ],
     'neutral': [
         {"title": "Kabira", "url": "https://drive.google.com/file/d/1OBw5YVlxMsAoNKNT9DEj0dkZyOb2lLw7/preview"},
-        {"title": "Tera Hone", "url": "https://drive.google.com/file/d/1C0z_LLbvoGR1qKM8a94fUZsHijR6NBTp/preview"}
+        {"title": "Tera Hone", "url": "https://drive.google.com/file/d/1C0z_LLbvoGR1qKM8a94fUZsHijR6NBTp/preview"},
 	{"title": "Akhiyaan Gulaab", "url": "https://drive.google.com/file/d/1B1gt1OiVe0PSuO1HHqP_SsTSDN4dJUPZ/preview"}
     ]
 }
@@ -68,3 +68,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
