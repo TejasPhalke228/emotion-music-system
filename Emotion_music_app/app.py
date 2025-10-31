@@ -16,26 +16,24 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 # Emotion to Bollywood songs mapping (preview links)
 emotion_playlist = {
     'happy': [
-        {"title": "pehla nasha", "url": "https://drive.google.com/file/d/13bfaZXgsGNPPkD_pA-Rkm8FXTNO3bQeD/preview"},
-        {"title": "tujhe dekha", "url": "https://drive.google.com/file/d/1JdXgcvcfiqftvr5-CLcGGXvRx6WOKMjq/preview"},
-        {"title": "badtameez dil", "url": "https://drive.google.com/file/d/1R6BWqjS2x22C3bziEuhhBLfhvbSw8S5B/preview"},
-        {"title": "ilahi", "url": "https://drive.google.com/file/d/1EvDoLKpCbcwyK4ArKaHr4Z8U4M7S0X70/preview"}
+        {"title": "Abhi Kuch Dino Se", "url": "https://drive.google.com/file/d/1BVBdwyH8ztemQ4WaN6eoBdCQUhBrA-9Y/preview"},
+        {"title": "Mere Bina", "url": "https://drive.google.com/file/d/18QKHZQdqG3_8Pk7BF0YpzC4YeDbTGNph/preview"},
+        {"title": "Samjho Na X Wishes", "url": "https://drive.google.com/file/d/1pJdCDN_3zV_ReBHyTPjek1lUybOrilNk/preview"},
+        {"title": "Zara Sa", "url": "https://drive.google.com/file/d/1rdQ9qUbbUIHQanz2VTTUm0vde1CuLLbS/preview"}
     ],
     'sad': [
-        {"title": "channa mereya", "url": "https://drive.google.com/file/d/1xQs78QDm6Keh-3c5R02gX6JJUxBxP0E6/preview"},
-        {"title": "tum hi ho", "url": "https://drive.google.com/file/d/1VGPTp2-xN1lRUF36P3yfR5z9BbvTnS4r/preview"},
-        {"title": "dooriyan", "url": "https://drive.google.com/file/d/1uAjVLL8pSNb5FTc9sDQpMPxH-5VE1jDn/preview"}
+        {"title": "Channa Mereya", "url": "https://drive.google.com/file/d/1xQs78QDm6Keh-3c5R02gX6JJUxBxP0E6/preview"},
+        {"title": "Tujhe Bhula Diya", "url": "https://drive.google.com/file/d/10RfOc-v_2OtG2cTS_vJygdKmMzHkLYCb/preview"},
+        {"title": "Dooriyan", "url": "https://drive.google.com/file/d/1uAjVLL8pSNb5FTc9sDQpMPxH-5VE1jDn/preview"}
     ],
     'angry': [
-        {"title": "saada haq", "url": "https://drive.google.com/file/d/1reSryO2rgIjWGdZ2PgZbno5nmmcywWpH/preview"},
-        {"title": "bulleya", "url": "https://drive.google.com/file/d/116l9rKuM1YHYtPnqFW-vk76Ms7E7dq-R/preview"}
-    ],
-    'surprise': [
-        {"title": "ek ladki", "url": "https://drive.google.com/file/d/1dIEjD7HH_FpndU9Px1oGQIiwNr_Re-4Q/preview"}
+        {"title": "Saada Haq", "url": "https://drive.google.com/file/d/1reSryO2rgIjWGdZ2PgZbno5nmmcywWpH/preview"},
+        {"title": "Bulleya", "url": "https://drive.google.com/file/d/116l9rKuM1YHYtPnqFW-vk76Ms7E7dq-R/preview"}
     ],
     'neutral': [
-        {"title": "kabira", "url": "https://drive.google.com/file/d/1OBw5YVlxMsAoNKNT9DEj0dkZyOb2lLw7/preview"},
-        {"title": "tera hone", "url": "https://drive.google.com/file/d/1C0z_LLbvoGR1qKM8a94fUZsHijR6NBTp/preview"}
+        {"title": "Kabira", "url": "https://drive.google.com/file/d/1OBw5YVlxMsAoNKNT9DEj0dkZyOb2lLw7/preview"},
+        {"title": "Tera Hone", "url": "https://drive.google.com/file/d/1C0z_LLbvoGR1qKM8a94fUZsHijR6NBTp/preview"}
+	{"title": "Akhiyaan Gulaab", "url": "https://drive.google.com/file/d/1B1gt1OiVe0PSuO1HHqP_SsTSDN4dJUPZ/preview"}
     ]
 }
 
