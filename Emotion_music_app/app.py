@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
-# Emotion to Bollywood songs mapping (preview links)
+# Emotion to Bollywood songs mapping
 emotion_playlist = {
     'happy': [
         {"title": "Abhi Kuch Dino Se", "url": "https://drive.google.com/file/d/1BVBdwyH8ztemQ4WaN6eoBdCQUhBrA-9Y/preview"},
@@ -33,7 +33,7 @@ emotion_playlist = {
     'neutral': [
         {"title": "Kabira", "url": "https://drive.google.com/file/d/1OBw5YVlxMsAoNKNT9DEj0dkZyOb2lLw7/preview"},
         {"title": "Tera Hone", "url": "https://drive.google.com/file/d/1C0z_LLbvoGR1qKM8a94fUZsHijR6NBTp/preview"},
-	{"title": "Akhiyaan Gulaab", "url": "https://drive.google.com/file/d/1B1gt1OiVe0PSuO1HHqP_SsTSDN4dJUPZ/preview"}
+        {"title": "Akhiyaan Gulaab", "url": "https://drive.google.com/file/d/1B1gt1OiVe0PSuO1HHqP_SsTSDN4dJUPZ/preview"}
     ]
 }
 
@@ -41,31 +41,47 @@ emotion_playlist = {
 def index():
     emotion = None
     playlist = []
-    if request.method == 'POST':
-        img_data = request.form['image']
-        img_str = img_data.split(",")[1]
-        img_bytes = base64.b64decode(img_str)
-        
-        filename = str(uuid.uuid4()) + ".jpg"
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-        image = Image.open(BytesIO(img_bytes))
-        image.save(filepath)
+    if request.method == 'POST':
+        img_data = request.form.get('image')
+
+        if not img_data:
+            return render_template('index.html', emotion='No Image Found', playlist=[])
 
         try:
-            result = DeepFace.analyze(img_path=filepath, actions=['emotion'], enforce_detection=False)
-            emotion = result[0]['dominant_emotion'].lower()
-        except:
-            emotion = 'neutral'
+            # Handle base64-encoded image (from webcam or file upload)
+            if img_data.startswith("data:image"):
+                img_str = img_data.split(",")[1]
+                img_bytes = base64.b64decode(img_str)
 
-        if emotion not in emotion_playlist:
-            emotion = 'neutral'
+                filename = str(uuid.uuid4()) + ".jpg"
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-        playlist = emotion_playlist.get(emotion, emotion_playlist['neutral'])
-        os.remove(filepath)
+                image = Image.open(BytesIO(img_bytes))
+                image.save(filepath)
+            else:
+                return render_template('index.html', emotion='Invalid Image Format', playlist=[])
+
+            # Analyze emotion
+            try:
+                result = DeepFace.analyze(img_path=filepath, actions=['emotion'], enforce_detection=False)
+                emotion = result[0]['dominant_emotion'].lower()
+            except Exception as e:
+                print("DeepFace Error:", e)
+                emotion = 'neutral'
+
+            # Map emotion to playlist
+            if emotion not in emotion_playlist:
+                emotion = 'neutral'
+            playlist = emotion_playlist.get(emotion, emotion_playlist['neutral'])
+
+        finally:
+            # Clean up image file
+            if os.path.exists(filepath):
+                os.remove(filepath)
 
     return render_template('index.html', emotion=emotion, playlist=playlist)
 
+
 if __name__ == "__main__":
     app.run(debug=True)
-
