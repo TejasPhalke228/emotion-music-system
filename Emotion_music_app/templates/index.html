@@ -19,13 +19,6 @@
             <input type="hidden" name="image" id="image-input">
         </form>
 
-        <!-- Fallback: File input for selfie if webcam not available -->
-        <div id="upload-section" style="display:none; margin-top:20px;">
-            <p>⚠️ Couldn’t access your camera. Please take or upload a selfie instead:</p>
-            <input type="file" accept="image/*" id="file-input" capture="user">
-            <button id="upload-btn">Upload & Detect Emotion</button>
-        </div>
-
         {% if emotion %}
             <h2>Detected Emotion: {{ emotion.upper() }}</h2>
             <h3>Recommended Songs:</h3>
@@ -45,26 +38,17 @@
         const captureBtn = document.getElementById('capture-btn');
         const imageForm = document.getElementById('image-form');
         const imageInput = document.getElementById('image-input');
-        const uploadSection = document.getElementById('upload-section');
-        const fileInput = document.getElementById('file-input');
-        const uploadBtn = document.getElementById('upload-btn');
 
         // Try to access webcam
         navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
             .then(stream => {
                 video.srcObject = stream;
-                uploadSection.style.display = "none";
-                captureBtn.style.display = "inline-block";
             })
             .catch(err => {
-                console.warn("Webcam not accessible:", err);
-                // Show upload option instead
-                video.style.display = "none";
-                captureBtn.style.display = "none";
-                uploadSection.style.display = "block";
+                alert("⚠️ Could not access the webcam. Please enable camera permissions in your browser settings.");
             });
 
-        // Capture from webcam
+        // Capture image and send to Flask
         captureBtn.addEventListener('click', () => {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
@@ -73,22 +57,6 @@
             imageInput.value = canvas.toDataURL('image/jpeg');
             imageForm.submit();
         });
-
-        // Upload fallback handler
-        uploadBtn.addEventListener('click', () => {
-            const file = fileInput.files[0];
-            if (!file) {
-                alert("Please select or take a selfie first.");
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = e => {
-                imageInput.value = e.target.result;
-                imageForm.submit();
-            };
-            reader.readAsDataURL(file);
-        });
     </script>
 </body>
 </html>
-
