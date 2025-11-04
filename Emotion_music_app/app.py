@@ -60,7 +60,7 @@ def index():
             print("Error analyzing emotion:", e)
             detected_emotion = 'neutral'
 
-        # Map complex emotions to simpler categories
+        # Simplify emotion categories
         emotion_map = {
             'happy': 'happy',
             'sad': 'sad',
