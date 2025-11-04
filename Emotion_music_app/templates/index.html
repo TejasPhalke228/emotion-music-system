@@ -10,12 +10,21 @@
     <div class="container">
         <h1>Emotion Based Music System</h1>
 
-        <video id="video" width="320" height="240" autoplay></video><br>
-        <button id="capture-btn">Capture & Detect Emotion</button>
+        <!-- Webcam video feed -->
+        <video id="video" width="320" height="240" autoplay playsinline></video><br>
+        <button id="capture-btn">📸 Capture & Detect Emotion</button>
 
-        <form id="image-form" method="POST" style="display:none;">
+        <!-- Hidden form for captured image -->
+        <form id="image-form" method="POST" enctype="multipart/form-data" style="display:none;">
             <input type="hidden" name="image" id="image-input">
         </form>
+
+        <!-- Fallback: File input for selfie if webcam not available -->
+        <div id="upload-section" style="display:none; margin-top:20px;">
+            <p>⚠️ Couldn’t access your camera. Please take or upload a selfie instead:</p>
+            <input type="file" accept="image/*" id="file-input" capture="user">
+            <button id="upload-btn">Upload & Detect Emotion</button>
+        </div>
 
         {% if emotion %}
             <h2>Detected Emotion: {{ emotion.upper() }}</h2>
@@ -36,20 +45,50 @@
         const captureBtn = document.getElementById('capture-btn');
         const imageForm = document.getElementById('image-form');
         const imageInput = document.getElementById('image-input');
+        const uploadSection = document.getElementById('upload-section');
+        const fileInput = document.getElementById('file-input');
+        const uploadBtn = document.getElementById('upload-btn');
 
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => video.srcObject = stream)
-            .catch(err => alert("Could not access webcam."));
+        // Try to access webcam
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+            .then(stream => {
+                video.srcObject = stream;
+                uploadSection.style.display = "none";
+                captureBtn.style.display = "inline-block";
+            })
+            .catch(err => {
+                console.warn("Webcam not accessible:", err);
+                // Show upload option instead
+                video.style.display = "none";
+                captureBtn.style.display = "none";
+                uploadSection.style.display = "block";
+            });
 
+        // Capture from webcam
         captureBtn.addEventListener('click', () => {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
             imageInput.value = canvas.toDataURL('image/jpeg');
             imageForm.submit();
+        });
+
+        // Upload fallback handler
+        uploadBtn.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select or take a selfie first.");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = e => {
+                imageInput.value = e.target.result;
+                imageForm.submit();
+            };
+            reader.readAsDataURL(file);
         });
     </script>
 </body>
 </html>
+
