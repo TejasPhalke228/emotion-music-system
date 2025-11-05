@@ -1,62 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emotion Based Music System</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emotion-Based Music System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #2b1055, #7597de);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 40px;
+    }
+
+    video {
+      border: 3px solid white;
+      border-radius: 10px;
+      width: 320px;
+      height: 240px;
+      margin-top: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff4b5c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff2e44;
+    }
+
+    .playlist {
+      margin-top: 40px;
+    }
+
+    iframe {
+      width: 300px;
+      height: 80px;
+      border: none;
+      margin: 10px;
+      border-radius: 8px;
+    }
+
+    #retry-section {
+      display: none;
+      margin-top: 30px;
+    }
+
+    #retry-section button {
+      background-color: #1dd1a1;
+    }
+
+    #retry-section button:hover {
+      background-color: #10ac84;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Emotion Based Music System</h1>
+  <h1>Emotion-Based Music System</h1>
 
-        <!-- Webcam video feed -->
-        <video id="video" width="320" height="240" autoplay playsinline></video><br>
-        <button id="capture-btn">📸 Capture & Detect Emotion</button>
+  <div id="camera-section">
+    <video id="video" autoplay></video><br />
+    <button id="capture-btn">Capture</button>
+  </div>
 
-        <!-- Hidden form for captured image -->
-        <form id="image-form" method="POST" enctype="multipart/form-data" style="display:none;">
-            <input type="hidden" name="image" id="image-input">
-        </form>
+  <div id="retry-section">
+    <p>Camera access was denied or unavailable.</p>
+    <button id="retry-btn">Try Again</button>
+  </div>
 
-        {% if emotion %}
-            <h2>Detected Emotion: {{ emotion.upper() }}</h2>
-            <h3>Recommended Songs:</h3>
-            <ul>
-                {% for song in playlist %}
-                    <li class="song-item">
-                        <div class="song-title">{{ song.title }}</div>
-                        <a href="{{ song.url }}" target="_blank" class="play-button">Listen 🎵</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
+  {% if emotion %}
+  <div class="playlist">
+    <h2>Detected Emotion: {{ emotion|capitalize }}</h2>
+    <h3>Recommended Songs:</h3>
+    {% for song in playlist %}
+      <div>
+        <p>{{ song.title }}</p>
+        <iframe src="{{ song.url }}" allow="autoplay"></iframe>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 
-    <script>
-        const video = document.getElementById('video');
-        const captureBtn = document.getElementById('capture-btn');
-        const imageForm = document.getElementById('image-form');
-        const imageInput = document.getElementById('image-input');
+  <script>
+    const video = document.getElementById("video");
+    const captureBtn = document.getElementById("capture-btn");
+    const cameraSection = document.getElementById("camera-section");
+    const retrySection = document.getElementById("retry-section");
 
-        // Try to access webcam
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
-            .then(stream => {
-                video.srcObject = stream;
-            })
-            .catch(err => {
-                alert("⚠️ Could not access the webcam. Please enable camera permissions in your browser settings.");
-            });
+    // Initialize camera
+    async function initCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        cameraSection.style.display = "block";
+        retrySection.style.display = "none";
+      } catch (err) {
+        console.log("Camera access denied or unavailable:", err);
+        cameraSection.style.display = "none";
+        retrySection.style.display = "block";
+      }
+    }
 
-        // Capture image and send to Flask
-        captureBtn.addEventListener('click', () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            imageInput.value = canvas.toDataURL('image/jpeg');
-            imageForm.submit();
-        });
-    </script>
+    initCamera();
+
+    // Retry camera access
+    document.getElementById("retry-btn").addEventListener("click", () => {
+      location.reload(); // reload to re-trigger camera permission
+    });
+
+    // Capture image and send to backend
+    captureBtn.addEventListener("click", async () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext("2d");
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const image_data_url = canvas.toDataURL("image/jpeg");
+
+      const response = await fetch("/", {
+        method: "POST",
+        body: new URLSearchParams({ image: image_data_url }),
+      });
+
+      document.body.innerHTML = await response.text();
+    });
+  </script>
 </body>
 </html>
